@@ -8,17 +8,10 @@
                 <span class='icon-bar'></span>
             </button>
             <a class='navbar-brand' [routerLink]='["/"]'>NG Auth Test</a>
-            <a class='navbar-text' *ngIf="!auth.isAuthenticated()" (click)="auth.login()">Log In</a>
-            <a class='navbar-text' *ngIf="auth.isAuthenticated()" (click)="auth.logout()">Log Out</a>
         </div>
         <div class='clearfix'></div>
         <div class='navbar-collapse collapse' [ngClass]='{ "in": isExpanded }'>
             <ul class='nav navbar-nav'>
-                <li [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
-                    <a [routerLink]='["/"]' (click)='collapse()'>
-                        <span class='glyphicon glyphicon-home'></span> Home
-                    </a>
-                </li>
                 <li *ngIf="auth.isAuthenticated()" [routerLinkActive]='["link-active"]'>
                     <a [routerLink]='["/counter"]' (click)='collapse()'>
                         <span class='glyphicon glyphicon-education'></span> Counter
@@ -29,8 +22,12 @@
                         <span class='glyphicon glyphicon-th-list'></span> Fetch data
                     </a>
                 </li>
-            </ul>
-            
+                <li *ngIf="auth.isAuthenticated()" [routerLinkActive]='["link-active"]'>
+                        <a (click)='auth.logout()'>
+                            <span class="glyphicon glyphicon-log-out"></span> Logout
+                        </a>
+                    </li>
+                </ul>            
         </div>
     </div>
 </div>
