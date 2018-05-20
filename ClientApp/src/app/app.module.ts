@@ -10,13 +10,19 @@ import { HomeComponent } from './home/home.component';
 import { CounterComponent } from './counter/counter.component';
 import { FetchDataComponent } from './fetch-data/fetch-data.component';
 
+import { AuthService } from './auth/auth.service';
+import { CallbackComponent } from './callback/callback.component';
+import { CanActivateAuthenticated } from './services/CanActivateAuthenticated';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    CounterComponent,    
+    FetchDataComponent,
+    CallbackComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -24,11 +30,13 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
     FormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
+      { path: 'home', component: HomeComponent },
+      { path: 'counter', component: CounterComponent, canActivate: [CanActivateAuthenticated] },
+      { path: 'fetch-data', component: FetchDataComponent, canActivate: [CanActivateAuthenticated] },
+      { path: 'callback', component: CallbackComponent },
     ])
   ],
-  providers: [],
+  providers: [AuthService, CanActivateAuthenticated],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
